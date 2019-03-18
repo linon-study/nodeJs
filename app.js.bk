@@ -1,0 +1,41 @@
+/** 
+ * Module dependencies. 
+ */
+
+var express = require('express')
+  , routes = require('./routes');
+
+//Express 的 createServer() 是已经过时的方法，现在是完全被抛弃了
+var app = module.exports = express.createServer();
+
+// Configuration 
+app.configure(function () {
+  //设置views路径和模板
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
+  //express.bodyParser()可以将client提交过来的post请求放入request.body中。
+  app.use(express.bodyParser());
+  //express.methodOverride()可以协助处理POST请求伪装PUT、DELETE和其他HTTP methods。
+  app.use(express.methodOverride());
+  //app.router()是route requests，但express.js的官方文件是这句可有可无，并且经过测试还真的是这样，不过还是写上吧
+  app.use(app.router);
+  //express.static()也是一个Connect內建的中间件来处理静态的requests，例如css、js、img文件等。所以static()里面指定的文件夹中的文件会直接作为静态资源吐出来。
+  app.use(express.static(__dirname + '/public'));
+});
+
+app.configure('development', function () {
+  //express.errorHandler()是Connect內建的中间件来协助处理例外。ssss
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+app.configure('production', function () {
+  app.use(express.errorHandler());
+});
+
+// Routes 
+app.get('/', routes.index);
+
+app.listen(3000);
+
+console.log("Express server listening on port %d in %s mode", app.address().port,
+  app.settings.env); 
