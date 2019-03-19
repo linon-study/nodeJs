@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "build": "webpack --config=config/webpack.dev.js",
+    "server": "webpack-dev-server --config=config/webpack.dev.js",
+    "start": "webpack --mode development",
+    "node": "supervisor ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -14,5 +17,37 @@
     "mongoose": "^5.4.19",
     "morgan": "~1.9.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^2.1.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "html-webpack-plugin": "^3.2.0",
+    "path": "^0.12.7",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "style-loader": "^0.23.1",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "description": "安装 \r npm install express -gd\r 或\r npm install -g express && npm install -g express-generator",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThisIsLinon/nodeJs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThisIsLinon/nodeJs/issues"
+  },
+  "homepage": "https://github.com/ThisIsLinon/nodeJs#readme"
 }
