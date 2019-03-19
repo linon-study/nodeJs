@@ -94,7 +94,7 @@ module.exports = {
       可以通过 filename 参数指定输出的文件名
       html-webpack-plugin 也可以不指定 template 参数，它会使用默认的 html 模板。
       */
-      template: './src/index.html',
+      template: './index.html',
 
       /*
       因为和 webpack 4 的兼容性问题，chunksSortMode 参数需要设置为 none
@@ -106,7 +106,7 @@ module.exports = {
   devtool: 'eval-source-map', // 指定加source-map的方式
   devServer: {
     contentBase: path.join(__dirname, "../dist"), //静态文件根目录
-    port: 3824, // 端口
+    port: 3001, // 端口
     host: 'localhost',
     overlay: true,
     compress: false // 服务器返回浏览器的时候是否启动gzip压缩

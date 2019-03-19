@@ -1,8 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './components/home';
+import { Provider } from 'react-redux'; 
+import { BrowserRouter } from 'react-router-dom'
+
+import Root from './routes/index';
+import configureStore from './redux/configureStore'
+const store = configureStore();
 
 ReactDOM.render(
-  <Home />,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Root />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
