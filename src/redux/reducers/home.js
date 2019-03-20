@@ -1,14 +1,14 @@
 import * as types from '../constants/ActionTypes';
 
 const initialState = {
-  messageDetails: {}
+  userList: {}
 };
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.TO_DO_LIST:
+    case types.GET_USER_LIST:
       return Object.assign({}, state, {
-        todoList: action.todoList
+        userList: action.userList
       });
     default:
       return state;

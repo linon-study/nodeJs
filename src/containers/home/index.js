@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, Modal, Icon, Input, Button, } from 'antd';
+import { Row, Col, Form, Modal, Icon, Input, Button, Divider, } from 'antd';
 
-import { doLogin } from '../../redux/actions/home'
+import { doLogin, getUserList } from '../../redux/actions/home'
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -32,6 +32,11 @@ class HorizontalLoginForm extends React.Component {
     });
   }
 
+  hlandClick() {
+    const { dispatch } = this.props;
+    dispatch(getUserList())
+  }
+
   render() {
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
@@ -41,38 +46,41 @@ class HorizontalLoginForm extends React.Component {
     const userNameError = isFieldTouched('userName') && getFieldError('userName');
     const passwordError = isFieldTouched('password') && getFieldError('password');
     return (
-      <Form layout="inline" onSubmit={this.handleSubmit}>
-        <Form.Item
-          validateStatus={userNameError ? 'error' : ''}
-          help={userNameError || ''}
-        >
-          {getFieldDecorator('userName', {
-            rules: [{ required: true, message: 'Please input your username!' }],
-          })(
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-          )}
-        </Form.Item>
-        <Form.Item
-          validateStatus={passwordError ? 'error' : ''}
-          help={passwordError || ''}
-        >
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
-          })(
-            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={hasErrors(getFieldsError())}
+      <div>
+        <Form layout="inline" onSubmit={this.handleSubmit}>
+          <Form.Item
+            validateStatus={userNameError ? 'error' : ''}
+            help={userNameError || ''}
           >
-            Log in
+            {getFieldDecorator('username', {
+              rules: [{ required: true, message: 'Please input your username!' }],
+            })(
+              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+            )}
+          </Form.Item>
+          <Form.Item
+            validateStatus={passwordError ? 'error' : ''}
+            help={passwordError || ''}
+          >
+            {getFieldDecorator('password', {
+              rules: [{ required: true, message: 'Please input your Password!' }],
+            })(
+              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+            )}
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled={hasErrors(getFieldsError())}
+            >
+              Log in
           </Button>
-        </Form.Item>
-      </Form>
-    );
+          </Form.Item>
+        </Form>
+        <Button onClick={this.hlandClick.bind(this)} >查询</Button>
+      </div>
+    )
   }
 }
 

@@ -1,7 +1,8 @@
 import { message } from 'antd';
 import * as types from '../constants/ActionTypes';
-import { doLoginUtil } from '../../utils/homeUtil';
+import { doLoginUtil, getUserListUtil } from '../../utils/homeUtil';
 
+//增加
 export function doLogin(parmas) {
   console.log('parmas......', parmas)
   return dispatch => {
@@ -14,4 +15,21 @@ export function doLogin(parmas) {
         }
       });
   };
+}
+
+//查询
+export function getUserList(params) {
+  console.log('params....', params);
+  return dispatch => {
+    return getUserListUtil(params)
+      .then(data => {
+        dispatch({
+          type: types.GET_USER_LIST,
+          userList: data
+        })
+      })
+      .catch(err => {
+        throw err;
+      })
+  }
 }

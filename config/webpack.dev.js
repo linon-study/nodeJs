@@ -105,6 +105,9 @@ module.exports = {
   ],
   devtool: 'eval-source-map', // 指定加source-map的方式
   devServer: {
+    proxy: { // proxy URLs to backend development server
+      '/users': 'http://localhost:3000'
+    },
     contentBase: path.join(__dirname, "../dist"), //静态文件根目录
     port: 3001, // 端口
     host: 'localhost',
