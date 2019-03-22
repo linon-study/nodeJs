@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, Form, Modal, Icon, Input, Button, Divider, } from 'antd';
+import { Row, Col, Form, Table, Modal, Icon, Input, Button, Divider, } from 'antd';
+import s from './index.css';
 
 import { doLogin, getUserList } from '../../redux/actions/home'
 
@@ -38,6 +39,7 @@ class HorizontalLoginForm extends React.Component {
   }
 
   render() {
+    const { userList } = this.props;
     const {
       getFieldDecorator, getFieldsError, getFieldError, isFieldTouched,
     } = this.props.form;
@@ -45,6 +47,11 @@ class HorizontalLoginForm extends React.Component {
     // Only show error after a field is touched.
     const userNameError = isFieldTouched('userName') && getFieldError('userName');
     const passwordError = isFieldTouched('password') && getFieldError('password');
+    const columns = [
+      { title: '姓名', dataIndex: 'username', key: 'username', width: 150, },
+      { title: '密码', dataIndex: 'password', key: 'password', width: 200 },
+      
+    ]
     return (
       <div>
         <Form layout="inline" onSubmit={this.handleSubmit}>
@@ -79,6 +86,19 @@ class HorizontalLoginForm extends React.Component {
           </Form.Item>
         </Form>
         <Button onClick={this.hlandClick.bind(this)} >查询</Button>
+        {
+              userList && userList.length > 0 ?
+                <div>
+                  <Table
+                    dataSource={userList}
+                    rowKey={'id'}
+                    columns={columns}
+                    pagination={false}
+                    scroll={{ x: 1200 }}
+                    onChange={() => { console.warn('000') }}
+                  />
+                </div> : null
+            }
       </div>
     )
   }
@@ -87,11 +107,14 @@ class HorizontalLoginForm extends React.Component {
 const WrappedHorizontalLoginForm = Form.create({ name: 'horizontal_login' })(HorizontalLoginForm);
 
 const mapState = (state) => {
+  // console.log(state)
   const {
-
+    home: {
+      userList=[]
+    }
   } = state;
   return {
-
+    userList,
   }
 };
 export default connect(mapState)(WrappedHorizontalLoginForm);

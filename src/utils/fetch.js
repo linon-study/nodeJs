@@ -18,7 +18,6 @@ const checkStatus=(response)=>{
 }
 
 const parseJSON=(response)=>{
-    console.log(response)
 	return response.json();
 }
 

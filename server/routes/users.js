@@ -32,7 +32,6 @@ router.post("/login", (req, res) => {
 router.get("/getUserList", (req, res) => {
       User.find()
       .then((data, err)=>{
-          console.log('data...........', data)
           res.json(data);
       })
       .catch(err=>{
@@ -43,9 +42,8 @@ router.get("/getUserList", (req, res) => {
 
 //查询每条数据的全部值
 router.get("/getUserNameList", (req, res) => {
-    User.find()
+    User.find({}, { "username": 1, "password": 1, "_id": 0 })
     .then((data, err)=>{
-        console.log('data...........', data)
         res.json(data);
     })
     .catch(err=>{

@@ -24,7 +24,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
   npm install --save-dev @babel/core
 */
 
-module.exports = {
+const config = {
   entry: ['./src/index.js'],
   output: {
     // publicPath: '/', //这里要放的是静态资源CDN的地址
@@ -44,20 +44,45 @@ module.exports = {
     // 多个loader是有顺序要求的，从右往左写，因为转换的时候是从右往左转换的
     rules: [
       {
-        test: /.css$/,
+        test: /\.(css|less)?$/,
         use: ExtractTextWebapckPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader'] // 不再需要style-loader放到html文件内
+          use: [    // 不再需要style-loader放到html文件内
+            { loader: "css-loader" },
+            { loader: "less-loader" }
+          ],
         }),
         include: path.join(__dirname, 'src'), //限制范围，提高打包速度
         exclude: /node_modules/
+      },
+      {//antd样式处理
+        test: /\.css$/,
+        exclude: /src/,
+        use: [
+          { loader: "style-loader", },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1
+            }
+          }
+        ]
       },
       {
         test: /\.(jsx|js)?$/,
         use: {
           loader: 'babel-loader',
           // query: { //同时可以把babel配置写到根目录下的.babelrc中
-          //   presets: ['es2015', 'react', 'stage-0', 'stage-1', 'env'] // env转换es6 stage-0转es7
+          //   // presets: ['es2015', 'react', 'stage-0', 'stage-1'], // env转换es6 stage-0转es7
+          //   plugins: [
+          //     [
+          //       "import",
+          //       {
+          //         "libraryName": "antd",
+          //         "style": true
+          //       }
+          //     ]
+          //   ],
           // }
         }
       },
@@ -121,3 +146,5 @@ module.exports = {
     poll: 1000 //每秒询问的文件变更的次数
   },
 }
+
+export default config;

@@ -19,7 +19,6 @@ export function doLogin(parmas) {
 
 //查询
 export function getUserList(params) {
-  console.log('params....', params);
   return dispatch => {
     return getUserListUtil(params)
       .then(data => {

@@ -4,8 +4,12 @@
   "private": true,
   "scripts": {
     "build": "webpack --config=config/webpack.dev.js",
-    "start": "webpack-dev-server --config=config/webpack.dev.js",
+    "start": "better-npm-run start",
     "server": "supervisor ./bin/www"
+  },
+  "betterScripts": {
+    "build": "supervisor ./bin/www && webpack-dev-server --config=config/webpack.dev.js",
+    "start": "babel-node tools/run start"
   },
   "dependencies": {
     "antd": "^3.15.1",
@@ -30,11 +34,15 @@
     "@babel/core": "^7.3.4",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-import": "^1.11.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "better-npm-run": "^0.1.1",
+    "bootable": "^0.2.4",
+    "browser-sync": "^2.26.3",
     "css-loader": "^2.1.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
@@ -42,10 +50,12 @@
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0"
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-middleware": "^3.6.1",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "description": "安装 \r npm install express -gd\r 或\r npm install -g express && npm install -g express-generator",
-  "main": "app.js",
+  "main": "./build/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ThisIsLinon/nodeJs.git"
