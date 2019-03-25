@@ -25,7 +25,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 */
 
 const config = {
-  entry: ['./src/index.js'],
+  // entry: ['./src/index.js'],
+  entry: {
+    app: [
+      'webpack-hot-middleware/client',
+      './src/index.js'
+    ],
+  },
   output: {
     // publicPath: '/', //这里要放的是静态资源CDN的地址
     path: path.resolve(__dirname, '../dist'),
@@ -44,47 +50,67 @@ const config = {
     // 多个loader是有顺序要求的，从右往左写，因为转换的时候是从右往左转换的
     rules: [
       {
-        test: /\.(css|less)?$/,
-        use: ExtractTextWebapckPlugin.extract({
-          fallback: 'style-loader',
-          use: [    // 不再需要style-loader放到html文件内
-            { loader: "css-loader" },
-            { loader: "less-loader" }
-          ],
-        }),
-        include: path.join(__dirname, 'src'), //限制范围，提高打包速度
-        exclude: /node_modules/
+        test: /\.(jsx|js)?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: { //同时可以把babel配置写到根目录下的.babelrc中
+            // presets: ['es2015', 'react', 'stage-0', 'stage-1'], // env转换es6 stage-0转es7
+            plugins: [
+              // ['react-hot-loader/babel'],
+              ['import', { "libraryName": "antd", "style": "css" }]  //处理antd框架css不显示问题
+            ]
+          }
+        }
       },
-      {//antd样式处理
-        test: /\.css$/,
-        exclude: /src/,
+      {
+        test: /\.less$/,
+        exclude: /node_modules/,
         use: [
           { loader: "style-loader", },
           {
             loader: "css-loader",
             options: {
-              importLoaders: 1
-            }
-          }
-        ]
+              modules: true,
+              // localIndetName: "[name]__[local]___[hash:base64:5]"
+            },
+          },
+          {
+            loader: "less-loader", // compiles Less to CSS
+          },
+        ],
       },
       {
-        test: /\.(jsx|js)?$/,
-        use: {
-          loader: 'babel-loader',
-          // query: { //同时可以把babel配置写到根目录下的.babelrc中
-          //   // presets: ['es2015', 'react', 'stage-0', 'stage-1'], // env转换es6 stage-0转es7
-          //   plugins: [
-          //     [
-          //       "import",
-          //       {
-          //         "libraryName": "antd",
-          //         "style": true
-          //       }
-          //     ]
-          //   ],
-          // }
-        }
+        test: /\.css$/,
+        exclude: /node_modules|antd\.css/,
+        use: [
+          { loader: "style-loader", },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              // 改动
+              modules: true,   // 新增对css modules的支持
+              // localIndetName: '[name]__[local]__[hash:base64:5]', //
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules|antd\.css/,
+        use: [
+          { loader: "style-loader", },
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              // 改动
+              // modules: true,   // 新增对css modules的支持
+              // localIndetName: '[name]__[local]__[hash:base64:5]', //
+            },
+          },
+        ],
       },
       { //file-loader 解决css等文件中引入图片路径的问题
         // url-loader 当图片较小的时候会把图片BASE64编码，大于limit参数的时候还是使用file-loader 进行拷贝
@@ -100,6 +126,7 @@ const config = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     // 多入口的html文件用chunks这个参数来区分
     /* new HtmlWebpackPlugin({
     template: path.resolve(__dirname, 'src', 'index.html'),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, Form, Table, Modal, Icon, Input, Button, Divider, } from 'antd';
-import s from './index.css';
+import s from './home.less';
 
 import { doLogin, getUserList } from '../../redux/actions/home'
 
@@ -53,7 +53,8 @@ class HorizontalLoginForm extends React.Component {
       
     ]
     return (
-      <div>
+      <div className={s.home} >
+        <p style={{color: '#666'}} >我的样式</p>
         <Form layout="inline" onSubmit={this.handleSubmit}>
           <Form.Item
             validateStatus={userNameError ? 'error' : ''}

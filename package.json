@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --config=config/webpack.dev.js",
+    "build": "webpack --config=tools/webpack.config.dev.js",
     "start": "better-npm-run start",
     "server": "supervisor ./bin/www"
   },
@@ -46,6 +46,8 @@
     "css-loader": "^2.1.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "path": "^0.12.7",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
