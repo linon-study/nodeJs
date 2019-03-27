@@ -1,7 +1,7 @@
 import * as fetch from './fetch';
 
 export const doLoginUtil =(data,options={})=>{ //登录接口
-	const url=`/user/login`
+	const url=`/user/register`
 	return fetch.post(url,data,options);
 }
 

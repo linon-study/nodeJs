@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --config=tools/webpack.config.dev.js",
     "start": "better-npm-run start",
-    "server": "supervisor ./bin/www"
+    "server": "supervisor ./server/app.js"
   },
   "betterScripts": {
     "build": "supervisor ./bin/www && webpack-dev-server --config=config/webpack.dev.js",
@@ -20,6 +20,7 @@
     "express": "~4.16.0",
     "http-errors": "^1.6.3",
     "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^3.2.2",
     "mongoose": "^5.4.19",
     "morgan": "~1.9.0",
     "react": "^16.8.4",

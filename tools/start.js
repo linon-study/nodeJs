@@ -16,7 +16,7 @@ const bundler = webpack(webpackConfig);
  */
 async function start() {
   //await run(require('./build'));
-  // await run(require('./serve'));
+  await run(require('./serve'));
 
   await new Promise(resolve => {
     browserSync({

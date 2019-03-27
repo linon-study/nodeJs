@@ -126,16 +126,10 @@ const config = {
     ]
   },
   plugins: [
+    //webpack热更新
     new webpack.HotModuleReplacementPlugin(),
     // 多入口的html文件用chunks这个参数来区分
-    /* new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, 'src', 'index.html'),
-    filename: 'index.html',
-    hash: true,//防止缓存
-    minify: {
-    removeAttributeQuotes: true//压缩 去掉引号
-    }
-    }),*/
+    
     new ExtractTextWebapckPlugin('css/build.css'), // 其实这个特性只用于打包生产环境，测试环境这样设置会影响HMR
     // new CleanWebpackPlugin([path.join(__dirname, 'dist')]),
     new HtmlWebpackPlugin({
@@ -156,16 +150,16 @@ const config = {
     })
   ],
   devtool: 'eval-source-map', // 指定加source-map的方式
-  devServer: {
-    proxy: { // proxy URLs to backend development server
-      '/users': 'http://localhost:3000'
-    },
-    contentBase: path.join(__dirname, "../dist"), //静态文件根目录
-    port: 3001, // 端口
-    host: 'localhost',
-    overlay: true,
-    compress: false // 服务器返回浏览器的时候是否启动gzip压缩
-  },
+  // devServer: {
+  //   proxy: { // proxy URLs to backend development server
+  //     '/users': 'http://localhost:3000'
+  //   },
+  //   contentBase: path.join(__dirname, "../dist"), //静态文件根目录
+  //   port: 3001, // 端口
+  //   host: 'localhost',
+  //   overlay: true,
+  //   compress: false // 服务器返回浏览器的时候是否启动gzip压缩
+  // },
   watch: true, // 开启监听文件更改，自动刷新
   watchOptions: {
     ignored: /node_modules/, //忽略不用监听变更的目录
