@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
+console.time('users')  //用来测试数据库连接时间
 var User = require("../bin/DAO/userDAO.js");
+console.timeEnd('users')
 var Animal = require("../bin/DAO/animalDAO.js");
 
 //注册接口
@@ -19,31 +21,9 @@ router.post("/register", (req, res) => {
 			res.json({ err: 0, msg: "添加成功" });
 		})
 		.catch(err => {
+			console.log(err)
 			res.json({ err: 2, msg: "未知错误" });
 		});
-
-	// User.find({ "username": req.body.username })
-	// 	.then((data, err) => {
-	// 		console.log(data, err)
-	// 		if (!data) {
-	// 			var s = new User(req.body);
-	// 			s.save()
-	// 				.then(() => {
-	// 					res.json({ err: 0, msg: "添加成功" });
-	// 				})
-	// 				.catch(err => {
-	// 					res.json({ err: 2, msg: "未知错误" });
-	// 				});
-	// 		} else {
-	// 			res.send({
-	// 				code: 400,
-	// 				message: '已存在用户！'
-	// 			});
-	// 		}
-	// 	})
-	// 	.catch(err => {
-	// 		console.log('error', err)
-	// 	});
 });
 
 //登录接口
