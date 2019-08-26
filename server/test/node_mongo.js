@@ -38,10 +38,11 @@ MongoClient.connect(url, function (err, client) {
 
   let user_array = [];
 
-  for (var i = 700000; i < 800000; i++) {
+  for (var i = 5900000; i < 6000010; i++) {
 
     console.log(i)
 
+    
     const user = {
       "name": "zhangsan" + i,
       "score": 0 + i,
